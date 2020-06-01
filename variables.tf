@@ -45,13 +45,6 @@ variable ami_id {
   default     = ""
 }
 
-variable ami_filter {
-  type        = string
-  description = "Use existing AMI with this name filter"
-  default     = "hashistack-encrypted-*"
-}
-
-
 variable instance_size {
   type        = string
   description = "VPC ID"

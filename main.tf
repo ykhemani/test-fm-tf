@@ -45,34 +45,6 @@ resource aws_iam_instance_profile my-profile {
   role                   = data.aws_iam_role.my-role.id
 }
 
-################################################################################
-# let's find the latest image for this owner
-data aws_ami ami {
-  most_recent            = true
-
-  filter {
-    name = "name"
-    values = ["hashistack-encrypted-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  filter {
-    name   = "tag:Owner"
-    values = [var.tag_owner]
-  }
-
-  owners = ["self"]
-}
-
-# use the ami_id if it isn't an empty string. otherwise, use the hashistack image.
-locals {
-  ami_id = var.ami_id == "" ? data.aws_ami.ami.id : var.ami_id
-}
-
 resource aws_instance ec2_instance {
   ami                    = var.ami_id
   instance_type          = var.instance_size
